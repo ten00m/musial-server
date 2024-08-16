@@ -1,6 +1,7 @@
+import { HTMLDocument } from "./HTMLDocument";
 import { Parser } from "./Parser";
-
-export class HTMLElement{
+// написать логику для получения имени тэга
+export class HTMLElement {
     text: string;
     parser: Parser;
 
@@ -22,5 +23,10 @@ export class HTMLElement{
         const propData = this.text.slice(posOfDataId, posOfLastSym)  // получаем значение свойства
     
         return propData
+    }
+
+    getElementsByTag(tag: string): Array<HTMLElement>{
+        const doc = new HTMLDocument(this.text)
+        return doc.getElementsByTag(tag)
     }
 }

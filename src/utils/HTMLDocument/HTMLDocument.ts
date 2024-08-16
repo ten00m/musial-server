@@ -3,6 +3,7 @@ import { Parser } from "./Parser"
 import axios from 'axios'
 
 //Класс хтмл документа. Создается при помощи ссылки на документ. Используется фабричный метод create() для сосзадния экземляра
+//Так же возможно создание с помощью конструктора и текста документа
 export class HTMLDocument {
     text: string;
     parser: Parser;
@@ -23,5 +24,11 @@ export class HTMLDocument {
         const arrayOfElements = this.parser.getElementsByTag(tag, this.text)
 
         return arrayOfElements
+    }
+
+    public getDivByClassName(className: string){
+        const divs = this.parser.getDivByClassName(className, this.text)
+        
+        return divs
     }
 }

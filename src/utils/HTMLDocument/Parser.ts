@@ -61,4 +61,18 @@ export class Parser {
     
         return inner
     }
+
+    getDivByClassName(className, doc): Array<HTMLElement>{
+        const allDivs = this.getElementsByTag('div', doc)
+
+        const divs = []
+
+        for (let div of allDivs){
+            if (div.getPropertyOfElem('class') === className){
+                divs.push(div)
+            }
+        }
+
+        return divs
+    }
 }

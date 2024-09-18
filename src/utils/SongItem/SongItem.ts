@@ -29,7 +29,6 @@ export class SongItem{
         let artistName = ''
         let songName = ''
         let duration = ''
-        console.log(spans)
 
         for(let span of spans){
             const className = span.getPropertyOfElem('class')

@@ -11,7 +11,7 @@ export class SearchController{
     @Get('')
     async search(
         @Query('mode') mode: string | undefined,
-        @Query('search') searchStr: string | undefined
+        @Query('q') searchStr: string | undefined 
     ){
         return this.searchService.searchFunc(mode, searchStr)
     }

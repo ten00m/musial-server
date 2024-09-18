@@ -7,8 +7,13 @@ export class UpdateDataController {
 
     constructor(private updateDataService: UpdateDataService){}
 
-    @Get('/')
-    async update(){
-        this.updateDataService.update()
-    }
+    // @Get('/spotId')
+    // async updateSpotId(){
+    //     this.updateDataService.updateSpotId()
+    // }
+
+    // @Get('/updateArtists')
+    // async updateArtists(){
+    //     this.updateDataService.updateArtists()
+    // }
 }

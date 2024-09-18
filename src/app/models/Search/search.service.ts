@@ -1,19 +1,19 @@
-import { Injectable } from "@nestjs/common";
+import { Inject, Injectable } from "@nestjs/common";
 import { HTMLDocument } from "src/utils/HTMLDocument/HTMLDocument";
 import { SongItem } from "src/utils/SongItem/SongItem";
+import { SpotifyApiService } from "../SpotifyApi/spotifyApi.service";
+import { SearchRes } from "./SearchResInterface";
 
-//важно!!!
-//спарсить данные с евери нойс
-//пройтись по жанрам и получить
-//имена исполнителей и их жанры
-//альбомы исполнителей с песнями
-//ссылки на картинки
+
 @Injectable()
 export class SearchService{
+    constructor(private spotifyApiService: SpotifyApiService){}
 
-    async searchFunc(mode: string, searchStr: string): Promise<Array<SongItem | string>>{
+    async searchFunc(mode: string, searchStr: string): Promise<Array<SongItem> | SearchRes>{
         if (mode === "song"){
             return await this.searchBySongName(searchStr)
+        }else if (mode === "name"){
+            return await this.searchByArtistName(searchStr)
         }
     }
 
@@ -22,12 +22,18 @@ export class SearchService{
         const doc = await HTMLDocument.create(url)
         const items = doc.getElementsByTag('item')
 
-        const audioProp = 'data-src'
-        const imageProp = 'data-id'
+        const audioProp = 'data-id'
+        const imageProp = 'data-src' 
         const artistNameProp = 'artist_name'
 
         const arrOfSongItems = items.map(e => new SongItem(e, audioProp, imageProp, artistNameProp))
 
         return arrOfSongItems
+    }
+
+    async searchByArtistName(searchStr: string): Promise<SearchRes>{
+        await this.spotifyApiService.init()
+        const searchRes = await this.spotifyApiService.searchByArtist(searchStr)
+        return searchRes
     }
 }

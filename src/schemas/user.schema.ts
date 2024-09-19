@@ -8,11 +8,20 @@ export type UserDocument = User & Document
 @Schema()
 export class User{
 
-    @Prop({unique: true})
+    @Prop({unique: true, required: true})
     login: string;
 
-    @Prop()
+    @Prop({required: true})
     password: string;
+
+    @Prop()
+    selectedGenres: Array<string>
+
+    @Prop()
+    genresOfFavorites: Array<string>  
+
+    @Prop()
+    favoritesArtists: Array<string>
 
     @Prop({type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Track'}]})
     tracks: Array<Track> 

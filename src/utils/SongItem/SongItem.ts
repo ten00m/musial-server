@@ -8,7 +8,7 @@ export class SongItem{
     readonly audioSrc: string;
     readonly artistName: string;
     readonly songName: string;
-    readonly duration: string;
+    readonly duration: number;
 
     constructor(item: HTMLElement, audioProp: string, imageProp: string, artistNameProp: string){
         this.audioSrc = this.getAudioSrc(audioProp, item)
@@ -24,11 +24,11 @@ export class SongItem{
         return item.getPropertyOfElem(imageProp)
     }
 
-    private getSongArtDur(artistNameProp: string, item: HTMLElement){ //возвращает название песни, имя исполнителя, длительность песни
+    private getSongArtDur(artistNameProp: string, item: HTMLElement): [string, string, number]{ //возвращает название песни, имя исполнителя, длительность песни в секундах
         const spans = item.getElementsByTag('span')
-        let artistName = ''
-        let songName = ''
-        let duration = ''
+        let artistName: string = ''
+        let songName: string = ''
+        let durationStr: string = ''
 
         for(let span of spans){
             const className = span.getPropertyOfElem('class')
@@ -36,10 +36,14 @@ export class SongItem{
             if(className === artistNameProp){
                 [artistName, songName] = span.getInnerHTML().split(' - ')
             } else if(className === 'sure'){
-                duration = span.getInnerHTML()
+                durationStr = span.getInnerHTML()
             }
         }
         songName = songName.slice(0, -1)
+
+        const [min, sec] = durationStr.split(':').map(e => Number(e))
+        const duration: number = sec + 60*min
+
         return [artistName, songName, duration]
     }
 

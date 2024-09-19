@@ -7,16 +7,22 @@ import { SpotifyApiModule } from "./SpotifyApi/spotifyApi.module";
 import { CorrespondenceModule } from "./Correspondence/correspondece.module";
 import { UserModule } from "./User/user.module";
 import { TrackModule } from "./Track/track.module";
+import { ConfigModule } from "@nestjs/config";
+import { AuthModule } from "./Auth/auth.module";
 
 @Module({
     imports: [
+        ConfigModule.forRoot({
+            envFilePath: `.${process.env.NODE_ENV}.env`
+        }),  
         SearchModule, 
         UpdateDataModule,
         SpotifyApiModule,
         CorrespondenceModule,
         UserModule,
         TrackModule,
-        MongooseModule.forRoot('mongodb://127.0.0.1:27017/musialTest')
+        AuthModule,
+        MongooseModule.forRoot(process.env.MONGO_URI), 
     ]
 })
 export class AppModule {

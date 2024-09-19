@@ -13,4 +13,12 @@ export class SpotifyApiController{
     async test(){
         return this.spotifyApiService.testApi()
     }
+
+    @Get('/artist')
+    async getArtist(
+        @Query('id') artistId 
+    ){
+        return this.spotifyApiService.getArtistById(artistId)
+    } 
+
 }

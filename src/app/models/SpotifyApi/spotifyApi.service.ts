@@ -14,6 +14,7 @@ export class SpotifyApiService{
         this.spotifyApiUrl = 'https://api.spotify.com/v1/'
         this.spotifyApiFilePath = './static/spotApiHeader.json'
         this.apiConfig = await this.getApiHeader()
+        console.log('spotApi init')
     }
 
     public async getArtistById(artistId: string){

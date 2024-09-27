@@ -7,6 +7,7 @@ export type UserDocument = User & Document
 
 @Schema()
 export class User{
+    _id: mongoose.Schema.Types.ObjectId
 
     @Prop({unique: true, required: true})
     login: string;

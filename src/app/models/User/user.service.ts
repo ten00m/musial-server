@@ -11,13 +11,23 @@ export class UserService{
         @InjectModel(User.name) private userRepository: Model<User>
     ){}
 
-    async getAllUsers(){
+    async getAllUsers(): Promise<User[]>{
         const users = await this.userRepository.find()
         return users
+    }
+
+    async getUserById(userId: string): Promise<User>{
+        const user = await this.userRepository.findById(userId)
+        return user
+    }
+
+    async getUserByLogin(userLogin: string): Promise<User>{
+        const user = await this.userRepository.findOne({login: userLogin})
+        return user
     }
 
     async createUser(dto: CreateUserDto){
         console.log(`user ${dto.login} created with password ${dto.password}`)
         return this.userRepository.create(dto)
-    }
+    } 
 }

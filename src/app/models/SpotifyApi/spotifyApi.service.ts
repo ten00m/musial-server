@@ -13,15 +13,25 @@ export class SpotifyApiService{
     public async init(){
         this.spotifyApiUrl = 'https://api.spotify.com/v1/'
         this.spotifyApiFilePath = './static/spotApiHeader.json'
-        this.apiConfig = await this.getApiHeader()
+
+        try{
+            this.apiConfig = await this.getApiHeader()
+        }catch(e){
+            
+        }
+
         console.log('spotApi init')
     }
 
     public async getArtistById(artistId: string){
         const url = `${this.spotifyApiUrl}artists/${artistId}`
-        const req = await fetch(url, this.apiConfig)  
-        const artist = req.json()
-        return artist
+        try {
+            const req = await fetch(url, this.apiConfig)  
+            const artist = req.json()
+            return artist
+        }catch(e){
+            return 'ошибка запроса к апи спотифай'
+        }
     }
 
     public async testApi(){
@@ -32,8 +42,12 @@ export class SpotifyApiService{
 
     public async searchByArtist(searchStr: string, offset=0, limit=20){
         const url = `${this.spotifyApiUrl}search?q=${searchStr}&limit=${limit}&offset=${offset}&type=artist`
-        const req = await fetch(url, this.apiConfig) 
-        return req.json()
+        try{
+            const req = await fetch(url, this.apiConfig) 
+            return req.json()
+        }catch(e){
+            return e
+        }
     }
 
     private async checkApiHeader(config: object): Promise<boolean>{

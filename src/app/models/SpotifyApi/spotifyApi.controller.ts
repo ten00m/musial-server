@@ -4,9 +4,7 @@ import { SpotifyApiService } from "./spotifyApi.service";
 
 @Controller('/spot-api')
 export class SpotifyApiController{
-    constructor(private spotifyApiService: SpotifyApiService){
-        this.spotifyApiService.init()
-    }
+    constructor(private spotifyApiService: SpotifyApiService){}
 
 
     @Get('/test')
@@ -14,7 +12,7 @@ export class SpotifyApiController{
         return this.spotifyApiService.testApi()
     }
 
-    @Get('/artist')
+    @Get('/artists')
     async getArtist(
         @Query('id') artistId 
     ){

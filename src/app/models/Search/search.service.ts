@@ -32,7 +32,6 @@ export class SearchService{
     }
 
     async searchByArtistName(searchStr: string): Promise<SearchRes>{
-        await this.spotifyApiService.init()
         const searchRes = await this.spotifyApiService.searchByArtist(searchStr)
         return searchRes
     }

@@ -12,7 +12,7 @@ export class AuthController{
     async login(
         @Body() userDto: CreateUserDto
     ){
-        this.authService.login(userDto)
+        return this.authService.login(userDto)
     }
 
     @Post('/logout')

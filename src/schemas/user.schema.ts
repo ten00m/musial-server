@@ -5,6 +5,11 @@ import mongoose from "mongoose";
 
 export type UserDocument = User & Document
 
+export interface FavouriteGenre{
+    genre: string;
+    count: number;
+}
+
 @Schema()
 export class User{
     _id: mongoose.Schema.Types.ObjectId
@@ -19,7 +24,7 @@ export class User{
     selectedGenres: Array<string>
 
     @Prop()
-    genresOfFavorites: Array<string>  
+    genresOfFavorites: Array<FavouriteGenre>  
 
     @Prop()
     favoritesArtists: Array<string>

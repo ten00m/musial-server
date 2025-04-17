@@ -51,28 +51,28 @@ export class SpotifyApiService{
     }
 
     private async checkApiHeader(config: object): Promise<boolean>{
-        const req = await fetch(this.spotifyApiUrl + 'search?q=pop&type=artist&limit=20', config)
+        const req = await fetch(this.spotifyApiUrl + 'search?q=pop&type=artist&limit=20', config);
         return req.status === 200
     }
 
     private async getApiHeader(): Promise<Config>{
-        const data = await fs.readFileSync(this.spotifyApiFilePath, {'encoding': 'utf-8'})
-
-        const confFromFile: Config = JSON.parse(data)
-
+        const data = await fs.readFileSync(this.spotifyApiFilePath, {'encoding': 'utf-8'});
+        const confFromFile: Config = await JSON.parse(data); 
+        
+        
         if(await this.checkApiHeader(confFromFile)){
             return confFromFile
         }else{
             const apiHeader = await this.getVariableFromDoc('https://everynoise.com/research.cgi', 'apiheader')
+ 
 
             const config: Config = {
                 'headers': {
                     'Authorization': apiHeader
                 }
             }
-
             fs.writeFile(this.spotifyApiFilePath, JSON.stringify(config), e => {})
-
+            
             return config
         }
     }
@@ -85,7 +85,7 @@ export class SpotifyApiService{
         const beginPos = data.indexOf(`${variable} = `) + variable.length + 4
         const endPos = data.indexOf(`"`, beginPos)
         const vari = data.slice(beginPos, endPos)
-
+ 
         return vari
     }
 }

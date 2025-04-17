@@ -7,7 +7,12 @@ import { SearchRes } from "./SearchResInterface";
 
 @Injectable()
 export class SearchService{
-    constructor(private spotifyApiService: SpotifyApiService){}
+    constructor(private spotifyApiService: SpotifyApiService){
+        spotifyApiService.init();
+        setInterval(() => {
+            spotifyApiService.init()
+        }, 100000) 
+    }
 
     async searchFunc(mode: string, searchStr: string): Promise<Array<SongItem> | SearchRes>{
         if (mode === "song"){

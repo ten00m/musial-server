@@ -7,11 +7,8 @@ const start = async () => {
         const PORT = process.env.PORT || 5000
         const app = await NestFactory.create(AppModule)
         
-        const spotApi = new SpotifyApiService()
+        const spotApi = new SpotifyApiService();
         
-        new Promise((res, rej) => {
-            spotApi.init()
-        })
 
         console.log(process.env.PRIVATE_KEY)
 
